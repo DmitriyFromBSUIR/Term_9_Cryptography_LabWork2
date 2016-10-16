@@ -43,6 +43,8 @@ public class PrimeNumbersTester {
     private int _y2 = 0;
     //
     private int _n = 0;
+    // global counter for prime numbers
+    private int _primeNumbersTotalCount = 3;
 
     public PrimeNumbersTester() {
         // measure time
@@ -57,22 +59,32 @@ public class PrimeNumbersTester {
         // x2 и y2 — это квадраты i и j (оптимизация).
         for (int i = 1; i <= _sqrtFromMaxInt16bit; i++) {
             _x2 += 2 * i - 1;
+            _y2 = 0;
             for (int j = 1; j <= _sqrtFromMaxInt16bit; j++) {
                 _y2 += 2 * j - 1;
-
                 _n = 4 * _x2 + _y2;
                 if ((_n <= _maxInt16bit) && (_n % 12 == 1 || _n % 12 == 5))
                     _isPrime[_n] = !_isPrime[_n];
 
                 // n = 3 * x2 + y2;
                 _n -= _x2; // Оптимизация
-                if ((_n <= _sqrtFromMaxInt16bit) && (_n % 12 == 7))
+                if ((_n <= _maxInt16bit) && (_n % 12 == 7))
                     _isPrime[_n] = !_isPrime[_n];
 
                 // n = 3 * x2 - y2;
                 _n -= 2 * _y2; // Оптимизация
                 if ((i > j) && (_n <= _maxInt16bit) && (_n % 12 == 11))
                     _isPrime[_n] = !_isPrime[_n];
+            }
+        }
+        // Отсеиваем кратные квадратам простых чисел в интервале [5, sqrt(limit)].
+        // (основной этап не может их отсеять)
+        for (int i = 5; i <= _sqrtFromMaxInt16bit; i++) {
+            if (_isPrime[i]) {
+                _n = i * i;
+                for (int j = _n; j <= _maxInt16bit; j += _n) {
+                    _isPrime[j] = false;
+                }
             }
         }
         // measure end of time
@@ -88,9 +100,12 @@ public class PrimeNumbersTester {
         System.out.println("3");
         System.out.println("5");
         for (int i = 6; i < _maxInt16bit; i++) {  // добавлена проверка делимости на 3 и 5. В оригинальной версии алгоритма потребности в ней нет.
+            //if ((_isPrime[i]) && (i % 3 != 0) && (i % 5 !=  0)){
             if ((_isPrime[i]) && (i % 3 != 0) && (i % 5 !=  0)){
                 System.out.println(i);
+                _primeNumbersTotalCount++;
             }
         }
+        System.out.println("Всего чисел в заданном диапазоне: " + _primeNumbersTotalCount);
     }
 }
