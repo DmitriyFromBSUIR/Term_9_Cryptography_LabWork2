@@ -31,9 +31,12 @@ import java.util.*;
 
 public class PrimeNumbersTester {
     private Integer _maxNumber = Integer.MAX_VALUE;
+    private int _maxInt16bit = 32768;
     private Integer _sqrtFromMaxNumber = new Double(Math.sqrt(_maxNumber)).intValue();
+    private int _sqrtFromMaxInt16bit = new Double(Math.sqrt(_maxInt16bit)).intValue();
     // Initialization the Sieve of Atkin
-    private boolean [] _isPrime = new boolean[_maxNumber];
+    //private boolean [] _isPrime = new boolean[_maxNumber];
+    private boolean [] _isPrime = new boolean[_maxInt16bit];
     //
     private int _x2 = 0;
     //
@@ -42,41 +45,49 @@ public class PrimeNumbersTester {
     private int _n = 0;
 
     public PrimeNumbersTester() {
+        // measure time
+        // nanoTime() --- Returns the current value of the running Java Virtual Machine's high-resolution time source, in nanoseconds.
+        long startTime = System.nanoTime();
+
         _isPrime[2] = true;
         _isPrime[3] = true;
 
         // Предположительно простые — это целые с нечётным числом
         // представлений в данных квадратных формах.
         // x2 и y2 — это квадраты i и j (оптимизация).
-        for (int i = 1; i <= _sqrtFromMaxNumber; i++) {
+        for (int i = 1; i <= _sqrtFromMaxInt16bit; i++) {
             _x2 += 2 * i - 1;
-            for (int j = 1; j <= _sqrtFromMaxNumber; j++) {
+            for (int j = 1; j <= _sqrtFromMaxInt16bit; j++) {
                 _y2 += 2 * j - 1;
 
                 _n = 4 * _x2 + _y2;
-                if ((_n <= _maxNumber) && (_n % 12 == 1 || _n % 12 == 5))
+                if ((_n <= _maxInt16bit) && (_n % 12 == 1 || _n % 12 == 5))
                     _isPrime[_n] = !_isPrime[_n];
 
                 // n = 3 * x2 + y2;
                 _n -= _x2; // Оптимизация
-                if ((_n <= _maxNumber) && (_n % 12 == 7))
+                if ((_n <= _sqrtFromMaxInt16bit) && (_n % 12 == 7))
                     _isPrime[_n] = !_isPrime[_n];
 
                 // n = 3 * x2 - y2;
                 _n -= 2 * _y2; // Оптимизация
-                if ((i > j) && (_n <= _maxNumber) && (_n % 12 == 11))
+                if ((i > j) && (_n <= _maxInt16bit) && (_n % 12 == 11))
                     _isPrime[_n] = !_isPrime[_n];
             }
         }
+        // measure end of time
+        long estimatedTime = System.nanoTime() - startTime;
+        System.out.println("Atkin's Test for Prime Numbers: Time(in sec) = " + (double)estimatedTime/1000000000);
     }
 
     // Вывод списка простых чисел в консоль.
     public void displayPrimeNumbers(){
-        System.out.println("Prime Numbers in range [0.." + _maxNumber + "]");
+        System.out.println("Max int value (32-bit) = " + _maxNumber);
+        System.out.println("Prime Numbers in range [0.." + _maxInt16bit + "]");
         System.out.println("2");
         System.out.println("3");
         System.out.println("5");
-        for (int i = 6; i <= _maxNumber; i++) {  // добавлена проверка делимости на 3 и 5. В оригинальной версии алгоритма потребности в ней нет.
+        for (int i = 6; i < _maxInt16bit; i++) {  // добавлена проверка делимости на 3 и 5. В оригинальной версии алгоритма потребности в ней нет.
             if ((_isPrime[i]) && (i % 3 != 0) && (i % 5 !=  0)){
                 System.out.println(i);
             }
