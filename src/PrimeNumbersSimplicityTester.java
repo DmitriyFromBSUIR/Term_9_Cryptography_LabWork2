@@ -15,35 +15,51 @@ public class PrimeNumbersSimplicityTester {
     private int [] _arr = {2,3,5,7};
     private int _primeNumbersTotalCount = 4;
     private String _filepath = "D:\\Projects\\JetBrains\\IntelliJ_IDEA_Workspace\\Term_9\\Cryptography_LabWork2\\files\\primeNumbersList.txt";
+    private int [][] _primeNumbersValuesAndMarkersTable;
 
     public PrimeNumbersSimplicityTester(){
+        //createSieveOfEratosthenes();
         System.out.println("Max int value (32-bit) = " + _maxNumber);
         System.out.println("Sqrt from Max int value (32-bit) = " + _sqrtMaxNumber);
-        for(int i=0; i < 4; i++) {
+        /*for(int i=0; i < 4; i++) {
             System.out.println(_arr[i]);
-        }
+        }*/
+        createSieveOfEratosthenes();
     }
 
-
-
-
-
-    public boolean fillUpSieveOfEratosthenes(int curNumber) {
-        boolean[] primes=new boolean[curNumber+1];
-        Arrays.fill(primes,true);
-        primes[0]=primes[1]=false;
-        for (int i=2;i<primes.length;i++) {
-            if(primes[i]) {
-                for (int j=2;i*j<primes.length;j++) {
-                    primes[i*j]=false;
+    public void fillUpSieveOfEratosthenes() {
+        for (int i=11; i < _sqrtMaxNumber; i++) {
+            if(_primeNumbersValuesAndMarkersTable[i][1] == 1) {
+                for (int j=11; i*j < _sqrtMaxNumber; j++) {
+                    _primeNumbersValuesAndMarkersTable[i*j][1] = 0;
                 }
             }
         }
         //System.out.println("Number --- marker " + curNumber + " " + primes[curNumber]);
-        return primes[curNumber];
+        //return primes[curNumber];
     }
 
+    public void createSieveOfEratosthenes(){
+        _primeNumbersValuesAndMarkersTable = new int [_sqrtMaxNumber][2];
+        for(int i=0; i < _arr.length; i++){
+            _primeNumbersValuesAndMarkersTable[_arr[i]][0] = _arr[i];
+        }
+        for(int i=0; i < _sqrtMaxNumber; i++){
+            _primeNumbersValuesAndMarkersTable[i][1] = 1;
+        }
+        //
+        fillUpSieveOfEratosthenes();
+    }
 
+    public void displaySieveOfEratosthenes(){
+        for(int i=0; i < _sqrtMaxNumber; i++){
+            if(_primeNumbersValuesAndMarkersTable[i][1] == 1){
+                System.out.println(_primeNumbersValuesAndMarkersTable[i][0]);
+            }
+        }
+    }
+
+/*
     public void generateAndDisplay() throws FileNotFoundException, IOException, RuntimeException{
         long startTime = System.nanoTime();
         //for(int i=2; i < _sqrtMaxNumber; i++){
@@ -78,4 +94,5 @@ public class PrimeNumbersSimplicityTester {
         System.out.println("Atkin's Test for Prime Numbers: Time(in sec) = " + (double)estimatedTime/1000000000);
 
     }
+    */
 }

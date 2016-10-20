@@ -31,7 +31,7 @@ import java.util.*;
 
 public class AtkinsPrimalityTester{
     private Integer _maxNumber = Integer.MAX_VALUE;
-    private int _maxInt16bit = 32768;
+    private int _maxInt16bit = 4194304;
     private Integer _sqrtFromMaxNumber = new Double(Math.sqrt(_maxNumber)).intValue();
     private int _sqrtFromMaxInt16bit = new Double(Math.sqrt(_maxInt16bit)).intValue();
     // Initialization the Sieve of Atkin
@@ -106,6 +106,7 @@ public class AtkinsPrimalityTester{
                 _primeNumbersTotalCount++;
             }
         }
+        //double percent = _primeNumbersTotalCount/
         System.out.println("Всего чисел в заданном диапазоне: " + _primeNumbersTotalCount);
     }
 }
