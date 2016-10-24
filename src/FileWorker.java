@@ -1,12 +1,13 @@
+/**
+ * Created by Dmitry on 18.10.2016.
+ */
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-/**
- * Created by user on 18.10.2016.
- */
 public class FileWorker {
     //private int _dataPartSize = 0;
 

@@ -1,12 +1,15 @@
+
+
+/**
+ * Created by Dmitry on 17.10.2016.
+ */
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 
-/**
- * Created by user on 17.10.2016.
- */
 public class PrimeNumbersSimplicityTester {
     private Integer _maxNumber = Integer.MAX_VALUE;
     private Integer _sqrtMaxNumber = new Double(Math.sqrt(_maxNumber)).intValue();

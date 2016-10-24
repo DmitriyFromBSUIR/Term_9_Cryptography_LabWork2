@@ -1,5 +1,5 @@
 /**
- * Created by user on 16.10.2016.
+ * Created by Dmitry on 16.10.2016.
  */
 import java.io.File;
 import java.io.FileNotFoundException;

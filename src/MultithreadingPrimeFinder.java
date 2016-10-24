@@ -1,11 +1,12 @@
+/**
+ * Created by Dmitry on 20.10.2016.
+ */
+
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by user on 20.10.2016.
- */
     public class MultithreadingPrimeFinder implements Runnable{
 
         private int [] _numbersBorders;
@@ -15,7 +16,7 @@ import java.util.concurrent.TimeUnit;
         private int _timeout = 120;
 
         public void taskBalancing() {
-            
+
         }
 
         public MultithreadingPrimeFinder(){
